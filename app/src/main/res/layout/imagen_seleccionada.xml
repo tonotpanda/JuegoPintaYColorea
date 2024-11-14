@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="4"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:rowCount="4">
+
+        <ImageView
+            android:id="@+id/arbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/arbol" />
+
+        <ImageView
+            android:id="@+id/barco"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/barco" />
+
+        <ImageView
+            android:id="@+id/ciervo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/ciervo" />
+
+        <ImageView
+            android:id="@+id/gato"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/gato" />
+
+        <ImageView
+            android:id="@+id/girasol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/girasol" />
+
+        <ImageView
+            android:id="@+id/gusano"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/gusano" />
+
+        <ImageView
+            android:id="@+id/hoguera"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/hoguera" />
+
+        <ImageView
+            android:id="@+id/luna"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/luna" />
+
+        <ImageView
+            android:id="@+id/montaña"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/montana" />
+
+        <ImageView
+            android:id="@+id/nube"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/nube" />
+
+        <ImageView
+            android:id="@+id/pato"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/pato" />
+
+        <ImageView
+            android:id="@+id/perro"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/perro" />
+
+        <ImageView
+            android:id="@+id/pescador"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/pescador" />
+
+        <ImageView
+            android:id="@+id/planta"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/planta" />
+
+        <ImageView
+            android:id="@+id/sol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/sol" />
+
+        <ImageView
+            android:id="@+id/zanahoria"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowSpan="1"
+            android:layout_rowWeight="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:src="@drawable/zanahoria" />
+
+
+    </GridLayout>
+
+
+</LinearLayout>

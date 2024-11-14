@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="negro">#050407</color>
+    <color name="white">#FFFFFF</color>
+
+
+    <color name="amarillo_abeja">#ffff42</color>
+    <color name="marron_abeja">#553d0c</color>
+    <color name="azul_abeja">#def5ff</color>
+    <color name="negro_abeja">#210f03</color>
+
+
+    <color name="rojo_arcoiris">#e3102c</color>
+    <color name="naranja_arcoiris">#fe9e16</color>
+    <color name="amarillo_arcoiris">#ffe803</color>
+    <color name="verde_arcoiris">#83b441</color>
+    <color name="azul_claro_arcoiris">#10aabc</color>
+    <color name="azul_oscuro_arcoiris">#0679b4</color>
+    <color name="morado_arcoiris">#6b317e</color>
+
+
+    <color name="verde_oscuro_caracol">#b7b835</color>
+    <color name="verda_claro_caracol">#f3d67d</color>
+    <color name="marron_caracol">#c6964a</color>
+    <color name="rosa_caracol">#f0776f</color>
+
+
+    <color name="azul_elefante">#53accc</color>
+    <color name="gris_elefante">#c4a68d</color>
+    <color name="rosa_orejas_elefante">#e28270</color>
+    <color name="rosa_lengua_elefante">#e58596</color>
+    <color name="marron_garganta_elefante">#461408</color>
+    <color name="blanco_pezuna_elefante">#ecddc3</color>
+
+
+    <color name="amarillo_gusano1">#ffef01</color>
+    <color name="naranja_guasano1">#ff9f10</color>
+    <color name="rojo_gusano1">#f63516</color>
+    <color name="verde_gusano1">#289446</color>
+    <color name="azul_gusano1">#0db8d1</color>
+    <color name="morado_gusano1">#80358e</color>
+    <color name="rojoLengua_gusano1">#a84327</color>
+
+
+    <color name="rosa_fuerte_gusano2">#ffb3bb</color>
+    <color name="rosa_claro_gusano2">#fde7e3</color>
+    <color name="rosa_lengua_gusano2">#ff7c77</color>
+
+
+    <color name="amarillo_claro_luna">#fff102</color>
+    <color name="amarillo_oscuro_luna">#feb503</color>
+    <color name="rojo_lengua_luna">#ed350c</color>
+
+
+    <color name="azul_claro_medusa">#0faec2</color>
+    <color name="azul_oscuro_medusa">#0a77a2</color>
+    <color name="rosa_claro_medusa">#e45388</color>
+    <color name="rosa_oscuro_medusa">#ba1d4f</color>
+    <color name="rosa_boca_medusa">#d42727</color>
+
+
+    <color name="color_carne_mono1">#ffba90</color>
+    <color name="marron_mono1">#8c5e3b</color>
+
+
+    <color name="marron_mono2">#8e4f1c</color>
+    <color name="amarillo_mono2">#ffd153</color>
+    <color name="rosa_mono3">#e55590</color>
+
+
+    <color name="marron_rama_mono3">#804003</color>
+    <color name="verde_ojas_mono3">#358500</color>
+    <color name="marron_pelo_mono3">#aa6d2a</color>
+    <color name="piel_mono3">#ffdfa1</color>
+    <color name="orejas_mono3">#fba368</color>
+    <color name="nariz_boca_mono3">#e87c60</color>
+
+
+    <color name="azul_nube">#0eb6d0</color>
+    <color name="rojo_boca_nube">#c63a16</color>
+
+
+    <color name="naranja_claro_pez">#ffa006</color>
+    <color name="naranja_oscuro_pez">#ff7104</color>
+
+
+    <color name="morado_claro_pulo">#f05790</color>
+    <color name="morado_oscuro_pulpo">#ba174c</color>
+    <color name="amarillo_pulpo">#fce103</color>
+    <color name="rojo_boca_pulpo">#cf3312</color>
+
+
+    <color name="rojo_seta">#ff482c</color>
+    <color name="amarillo_calo_seta">#fff5b3</color>
+    <color name="verde_seta">#94b913</color>
+    <color name="azul_boca_seta">#7e9bb4</color>
+    <color name="rosa_lengua_seta">#ff97b1</color>
+
+
+    <color name="gris_volcan">#b0afaf</color>
+    <color name="amarillo_volcan">#ffea02</color>
+    <color name="naranja_volcan">#eb990b</color>
+    <color name="marron_volcan">#8e4e22</color>
+</resources>
