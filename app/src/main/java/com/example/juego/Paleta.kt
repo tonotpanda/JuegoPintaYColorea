@@ -7,8 +7,7 @@ class Paleta {
     val colorsAbeja = listOf(
         Color.parseColor("#ffff42"),
         Color.parseColor("#553d0c"),
-        Color.parseColor("#def5ff"),
-        Color.parseColor("#210f03")
+        Color.parseColor("#def5ff")
     )
     val colorsArcoiris = listOf(
         Color.parseColor("#e3102c"),
@@ -44,7 +43,7 @@ class Paleta {
     )
     val colorsGusano2 = listOf(
         Color.parseColor("#ffb3bb"),
-        Color.parseColor("#fde7e3"),
+        Color.parseColor("#ffc3b8"),
         Color.parseColor("#ff7c77")
     )
     val colorsLuna = listOf(
@@ -103,4 +102,28 @@ class Paleta {
         Color.parseColor("#eb990b"),
         Color.parseColor("#8e4e22")
     )
+
+
+    fun getColorsForCurrentImage(index: Int): List<Int> {
+        return when (index) {
+            0 -> colorsAbeja
+            1 -> colorsArcoiris
+            2 -> colorsCaracol
+            3 -> colorsElefante
+            4 -> colorsGusano1
+            5 -> colorsGusano2
+            6 -> colorsLuna
+            7 -> colorsMedusa
+            8 -> colorsMono1
+            9 -> colorsMono2
+            10 -> colorsMono3
+            11 -> colorsNube
+            12 -> colorsPez
+            13 -> colorsPulpo
+            14 -> colorsSeta
+            15 -> colorsVolcan
+            else -> listOf() // Retorna una lista vacía si el índice es inválido
+        }
+    }
+
 }
