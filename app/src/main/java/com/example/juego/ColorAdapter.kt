@@ -35,6 +35,8 @@ class ColorAdapter(
 
     fun updateColors(newColors: List<Int>) {
         this.colors = newColors
-        notifyDataSetChanged()
+
+        notifyDataSetChanged() // Notifica que los datos han cambiado
+
     }
 }
