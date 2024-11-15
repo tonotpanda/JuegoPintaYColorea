@@ -1,3 +1,4 @@
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -5,36 +6,37 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.juego.R
 
-class ColorAdapter(private var colors: List<Int>, private val colorClickListener: (Int) -> Unit) :
-    RecyclerView.Adapter<ColorAdapter.ColorViewHolder>() {
+class ColorAdapter(
+    private val context: Context,
+    private var colors: List<Int>,
+    private val onClick: (Int) -> Unit
+) : RecyclerView.Adapter<ColorAdapter.ColorViewHolder>() {
 
-    inner class ColorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val colorView: ImageView = itemView.findViewById(R.id.colorView)
+    inner class ColorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val colorImageView: ImageView = view.findViewById(R.id.colorImageView)
 
-        fun bind(color: Int) {
-            colorView.setBackgroundColor(color) // Establece el color de fondo
-            itemView.setOnClickListener {
-                colorClickListener(color) // Llama al listener con el color seleccionado
+        init {
+            view.setOnClickListener {
+                onClick(colors[adapterPosition])
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_color, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.recycle_item, parent, false)
         return ColorViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ColorViewHolder, position: Int) {
-        holder.bind(colors[position]) // Vincula el color a la vista
+        holder.colorImageView.setBackgroundColor(colors[position])
     }
 
-    override fun getItemCount(): Int {
-        return colors.size // Devuelve la cantidad de colores
-    }
+    override fun getItemCount(): Int = colors.size
 
-    // Este método actualiza los colores del adaptador
     fun updateColors(newColors: List<Int>) {
-        colors = newColors // Actualiza la lista de colores
+        this.colors = newColors
+
         notifyDataSetChanged() // Notifica que los datos han cambiado
+
     }
 }
