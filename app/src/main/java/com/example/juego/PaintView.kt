@@ -22,7 +22,6 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private var errorCount = 0
     private var currentImageIndex = 0
     private var onImageCompletedListener: (() -> Unit)? = null
-    private var isImageCompleted = false
     private var isWaitingForNextImage = false
     private var isInteractionBlocked = false
 
@@ -65,6 +64,7 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         loadImage(currentImageIndex, w, h)
     }
 
+
     private fun loadImage(index: Int, w: Int, h: Int) {
         if (index < 0 || index >= img.size) {
             throw IllegalArgumentException("Índice de imagen fuera de rango")
@@ -75,13 +75,26 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
         try {
             val drawable = ContextCompat.getDrawable(context, img[index].second)
-            drawable?.setBounds(0, 0, w, h)
+            val referenceDrawable = ContextCompat.getDrawable(context, img[index].first)
+
+            // Obtener dimensiones originales
+            val originalWidth = drawable?.intrinsicWidth ?: 0
+            val originalHeight = drawable?.intrinsicHeight ?: 0
+
+            // Calcular la escala para mantener proporciones
+            val scale = Math.min(w.toFloat() / originalWidth, h.toFloat() / originalHeight)
+
+            // Calcular nuevas dimensiones
+            val newWidth = (originalWidth * scale).toInt()
+            val newHeight = (originalHeight * scale).toInt()
+
+            // Establecer límites y dibujar la imagen escalada
+            drawable?.setBounds(0, 0, newWidth, newHeight)
             drawable?.draw(canvasBitmap)
 
-            val referenceDrawable = ContextCompat.getDrawable(context, img[index].first)
-            referenceBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+            referenceBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888)
             val referenceCanvas = Canvas(referenceBitmap)
-            referenceDrawable?.setBounds(0, 0, w, h)
+            referenceDrawable?.setBounds(0, 0, newWidth, newHeight)
             referenceDrawable?.draw(referenceCanvas)
 
             // Inicializar el conteo de píxeles
@@ -89,8 +102,8 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             filledPixels = 0 // Reiniciar filledPixels
 
             // Contar solo los píxeles válidos
-            for (y in 0 until h) {
-                for (x in 0 until w) {
+            for (y in 0 until newHeight) {
+                for (x in 0 until newWidth) {
                     if (!isNearBlack(referenceBitmap.getPixel(x, y), currentImageIndex)) {
                         totalPixels++ // Solo contar píxeles que no son casi negros
                     }
@@ -101,6 +114,7 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             Toast.makeText(context, "Error al cargar la imagen", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -113,11 +127,11 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
         // Verificamos el porcentaje de píxeles pintados por imagen
         when (currentImageIndex) {
-            0 -> filledPixels = (totalPixels * 0.23).toInt() //bien
-            1 -> filledPixels = (totalPixels * 0.45).toInt() //bien
-            2 -> filledPixels = (totalPixels * 0.95).toInt() //bien
-            3 -> filledPixels = (totalPixels * 0.10).toInt()
-            4 -> filledPixels = (totalPixels * 0.07).toInt()
+            0 -> filledPixels = (totalPixels * 0.99).toInt() //bien
+            1 -> filledPixels = (totalPixels * 0.99).toInt() //bien
+            2 -> filledPixels = (totalPixels * 0.99).toInt() //bien
+            3 -> filledPixels = (totalPixels * 0.99).toInt()
+            4 -> filledPixels = (totalPixels * 0.99).toInt()
             5 -> filledPixels = (totalPixels * 0.20).toInt()
             6 -> filledPixels = (totalPixels * 0.20).toInt()
             7 -> filledPixels = (totalPixels * 0.20).toInt()
@@ -214,7 +228,6 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
                 }
             }
         }
-
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
     }
 
