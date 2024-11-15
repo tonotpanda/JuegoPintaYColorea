@@ -34,7 +34,7 @@ class ColorAdapter(private var colors: List<Int>, private val colorClickListener
 
     // Este método actualiza los colores del adaptador
     fun updateColors(newColors: List<Int>) {
-        colors = newColors // Actualiza la lista de colores
+        this.colors = newColors
         notifyDataSetChanged() // Notifica que los datos han cambiado
     }
 }

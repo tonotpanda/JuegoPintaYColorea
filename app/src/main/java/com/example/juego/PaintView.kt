@@ -113,12 +113,14 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
         // Verificamos el porcentaje de píxeles pintados por imagen
         when (currentImageIndex) {
-            0 -> filledPixels = (totalPixels * 0.23).toInt() //bien
-            1 -> filledPixels = (totalPixels * 0.45).toInt() //bien
-            2 -> filledPixels = (totalPixels * 0.95).toInt() //bien
-            3 -> filledPixels = (totalPixels * 0.10).toInt()
-            4 -> filledPixels = (totalPixels * 0.07).toInt()
-            5 -> filledPixels = (totalPixels * 0.20).toInt()
+            0 -> filledPixels = (totalPixels * 0.095).toInt() //abeja
+            1 -> filledPixels = (totalPixels * 0.45).toInt() //arcoiris
+            2 -> filledPixels = (totalPixels * 0.09).toInt() //caracol
+            3 -> filledPixels = (totalPixels * 0.1055).toInt() //elefante
+            4 -> filledPixels = (totalPixels * 0.083).toInt() //gusano1
+
+
+            5 -> filledPixels = (totalPixels * 0.20).toInt() //gusano2
             6 -> filledPixels = (totalPixels * 0.20).toInt()
             7 -> filledPixels = (totalPixels * 0.20).toInt()
             8 -> filledPixels = (totalPixels * 0.20).toInt()

@@ -110,22 +110,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateColorPalette(index: Int) {
         // Obtener la paleta de colores asociada con la imagen actual
-        val colores = paletas[index] ?: return // Asegúrate de que 'colores' no sea nulo
+        val colores = paletas[index]
 
-        // Actualizar el adaptador de colores con la nueva paleta
-        colorAdapter.updateColors(colores)  // Asegúrate de que 'colores' sea una lista de enteros
+        // Verifica que la lista de colores no sea nula y no esté vacía
+        if (colores != null && colores.isNotEmpty()) {
+            // Actualiza el adaptador de colores con la nueva paleta
+            colorAdapter.updateColors(colores)
+        } else {
+            Toast.makeText(this, "No hay colores disponibles para esta imagen.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun onImageCompleted() {
         Toast.makeText(this, "Imagen completada!", Toast.LENGTH_SHORT).show()
 
-        // Cargar la siguiente imagen si existe
+        // Asegúrate de que no excedas el límite de imágenes
         currentIndex++
         if (currentIndex < img.size) {
             loadImages(currentIndex)
             paintView.setCurrentImage(currentIndex) // Cambiar la imagen en PaintView
         } else {
+            // Si ya no hay más imágenes, muestra un mensaje y termina
             Toast.makeText(this, "¡Has completado todas las imágenes!", Toast.LENGTH_LONG).show()
         }
     }
+
 }
