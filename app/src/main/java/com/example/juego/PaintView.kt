@@ -2,6 +2,7 @@ package com.example.juego
 
 import android.content.Context
 import android.graphics.*
+import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
@@ -152,6 +153,8 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        val mediaPlayer: MediaPlayer;
+
         // Si las interacciones están bloqueadas, ignoramos los toques
         if (isInteractionBlocked) {
             return false
@@ -168,7 +171,9 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
                     if (areColorsSimilar(currentColor, correctColor)) {
                         startFloodFill(Point(x, y))
                     } else {
-                        Toast.makeText(context, "Color incorrecto", Toast.LENGTH_SHORT).show()
+                        mediaPlayer = MediaPlayer.create(context, R.raw.error)
+                        mediaPlayer.start()
+                        mediaPlayer.setOnCompletionListener { it.release() }
                         errorCount++
                     }
                 }
@@ -176,13 +181,22 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         }
         return true
     }
-
+    //hola
     private fun startFloodFill(point: Point) {
+        var mediaPlayer: MediaPlayer
         GlobalScope.launch(Dispatchers.Default) {
             floodFill(bitmap, point, bitmap.getPixel(point.x, point.y), currentColor)
+            mediaPlayer = MediaPlayer.create(context, R.raw.pintar)
+            mediaPlayer.start()
+            mediaPlayer.setOnCompletionListener { it.release() }
             withContext(Dispatchers.Main) {
                 invalidate()
                 if (isImageCompleted()) {
+                    // Reproducir el sonido correcto
+                    mediaPlayer = MediaPlayer.create(context, R.raw.correct)
+                    mediaPlayer.start()
+                    mediaPlayer.setOnCompletionListener { it.release() }
+
                     // Bloquear interacciones antes de pasar a la siguiente imagen
                     isInteractionBlocked = true
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -196,6 +210,7 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             }
         }
     }
+
 
 
     private fun floodFill(bitmap: Bitmap, point: Point, targetColor: Int, fillColor: Int) {
@@ -220,6 +235,7 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
                 val pixelColor = pixels[index]
 
                 if (!isNearBlack(pixelColor, currentImageIndex) && areColorsSimilar(pixelColor, targetColor) && isNearWhite(pixelColor)) {
+
                     pixels[index] = fillColor
                     filledPixels++ // Incrementar el conteo de píxeles rellenados
 
