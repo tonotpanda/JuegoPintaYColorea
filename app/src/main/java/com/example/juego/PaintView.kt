@@ -135,7 +135,6 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         }
     }
 
-    //hola
     override fun onTouchEvent(event: MotionEvent): Boolean {
         // Si las interacciones están bloqueadas, ignoramos los toques
         if (isInteractionBlocked) {
