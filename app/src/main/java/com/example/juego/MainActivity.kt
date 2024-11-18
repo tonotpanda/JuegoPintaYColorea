@@ -1,6 +1,7 @@
 package com.example.juego
 
 import ColorAdapter
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.widget.ImageView
@@ -38,6 +39,9 @@ class MainActivity : AppCompatActivity() {
     private var currentIndex = 0
     private var tiempoEnSegundos = 0
     private val handler = Handler()
+    private var count = 0;
+    private lateinit var mediaPlayer: MediaPlayer
+    private val sounds = arrayOf(R.raw.correct, R.raw.arcoiris, R.raw.error)
 
     private val runnable = object : Runnable {
         override fun run() {
@@ -94,9 +98,50 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+    public fun Sonido(){
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.correct)
+        mediaPlayer.start()
+
+        mediaPlayer.setOnCompletionListener {
+            mediaPlayer.release()
+        }
+    }
+
+    private fun playSound(count: Int) {
+        // Liberar el MediaPlayer anterior si ya está inicializado
+        if (::mediaPlayer.isInitialized) {
+            mediaPlayer.release()
+        }
+
+        // Asegurarse de que el índice no exceda el tamaño del array
+        val soundResId = if (count < sounds.size) sounds[count] else sounds.last()
+
+        mediaPlayer = MediaPlayer.create(this, soundResId)
+        mediaPlayer.start()
+
+        // Configurar el listener para liberar el MediaPlayer después de reproducir el sonido
+        mediaPlayer.setOnCompletionListener {
+            mediaPlayer.release()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Liberar recursos si el MediaPlayer está inicializado
+        if (::mediaPlayer.isInitialized) {
+            mediaPlayer.release()
+        }
+    }
 
     private fun onImageCompleted() {
-        Toast.makeText(this, "Imagen completada!", Toast.LENGTH_SHORT).show()
+        playSound(count)
+        count++
+        if (count >= sounds.size) {
+            // Reiniciar el contador si se excede el número de sonidos
+            count = 0
+        }
+
 
         // Asegúrate de que no excedas el límite de imágenes
         currentIndex++
