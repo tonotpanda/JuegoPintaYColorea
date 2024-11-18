@@ -181,7 +181,7 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         }
         return true
     }
-
+    //hola
     private fun startFloodFill(point: Point) {
         var mediaPlayer: MediaPlayer
         GlobalScope.launch(Dispatchers.Default) {
