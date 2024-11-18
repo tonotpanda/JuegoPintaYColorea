@@ -262,7 +262,6 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
 
         if (completionPercentage >= 100) {
-            Toast.makeText(context, "¡Imagen completada al 100%!", Toast.LENGTH_SHORT).show()
             return true
         } else {
             return false
