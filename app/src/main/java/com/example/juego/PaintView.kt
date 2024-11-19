@@ -25,6 +25,7 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private var onImageCompletedListener: (() -> Unit)? = null
     private var isWaitingForNextImage = false
     private var isInteractionBlocked = false
+    lateinit var mediaPlayer: MediaPlayer
 
     // Variables para el porcentaje de acierto
     private var totalPixels = 0
@@ -119,8 +120,23 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawBitmap(bitmap, 0f, 0f, null)
+
+        // Obtener el centro del PaintView
+        val centerX = width / 2f
+        val centerY = height / 2f
+
+        // Obtener las dimensiones de la imagen
+        val bitmapWidth = bitmap.width.toFloat()
+        val bitmapHeight = bitmap.height.toFloat()
+
+        // Calcular las coordenadas para centrar la imagen
+        val left = centerX - bitmapWidth / 2f
+        val top = centerY - bitmapHeight / 2f
+
+        // Dibujar la imagen centrada
+        canvas.drawBitmap(bitmap, left, top, paint)
     }
+
 
     private fun setFilledPixelsForNextImage() {
         // Reiniciar filledPixels
@@ -152,10 +168,37 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         }
     }
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        val mediaPlayer: MediaPlayer;
+    private fun playSound(soundResId: Int) {
 
-        // Si las interacciones están bloqueadas, ignoramos los toques
+        // Liberar el MediaPlayer anterior si ya está inicializado
+        if (::mediaPlayer.isInitialized) {
+            mediaPlayer.release()
+        }
+        mediaPlayer = MediaPlayer.create(context, soundResId)
+        mediaPlayer.start()
+        mediaPlayer.setOnCompletionListener { it.release() }
+
+    }
+
+    init {
+        // Pre-cargar imágenes y sonidos si es necesario
+        preloadResources()
+    }
+
+    private fun preloadResources() {
+        // Cargar imágenes en caché o inicializar MediaPlayer aquí
+        // Por ejemplo, puedes cargar el primer drawable en un Bitmap
+        if (img.isNotEmpty()) {
+            val drawable = ContextCompat.getDrawable(context, img[0].first)
+            val bitmap = Bitmap.createBitmap(drawable!!.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+            drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+            drawable.draw(canvas)
+            referenceBitmap = bitmap // Guarda el bitmap en caché
+        }
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
         if (isInteractionBlocked) {
             return false
         }
@@ -164,16 +207,16 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             val x = event.x.toInt()
             val y = event.y.toInt()
 
+            // Verificar que el clic esté dentro de los límites
             if (x in 0 until bitmap.width && y in 0 until bitmap.height) {
                 val correctColor = referenceBitmap.getPixel(x, y)
 
                 if (!isNearBlack(correctColor, currentImageIndex)) {
                     if (areColorsSimilar(currentColor, correctColor)) {
-                        startFloodFill(Point(x, y))
+                        playSound(R.raw.pintar)
+                        startFloodFill(Point(x, y), correctColor)
                     } else {
-                        mediaPlayer = MediaPlayer.create(context, R.raw.error)
-                        mediaPlayer.start()
-                        mediaPlayer.setOnCompletionListener { it.release() }
+                        playSound(R.raw.error)
                         errorCount++
                     }
                 }
@@ -181,39 +224,35 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         }
         return true
     }
-    //hola
-    private fun startFloodFill(point: Point) {
-        var mediaPlayer: MediaPlayer
-        GlobalScope.launch(Dispatchers.Default) {
-            mediaPlayer = MediaPlayer.create(context, R.raw.pintar)
-            mediaPlayer.start()
-            mediaPlayer.setOnCompletionListener { it.release() }
-            floodFill(bitmap, point, bitmap.getPixel(point.x, point.y), currentColor)
-            withContext(Dispatchers.Main) {
-                invalidate()
-                if (isImageCompleted()) {
-                    // Reproducir el sonido correcto
-                    mediaPlayer = MediaPlayer.create(context, R.raw.correct)
-                    mediaPlayer.start()
-                    mediaPlayer.setOnCompletionListener { it.release() }
 
-                    // Bloquear interacciones antes de pasar a la siguiente imagen
+    //hola
+    private fun startFloodFill(point: Point, correctColor: Int) {
+        CoroutineScope(Dispatchers.Default).launch {
+            floodFill(bitmap, point, bitmap.getPixel(point.x, point.y), currentColor, correctColor)
+            withContext(Dispatchers.Main) {
+                invalidate() // Asegúrate de llamar a invalidate solo una vez después de completar el relleno
+                if (isImageCompleted()) {
+                    playSound(R.raw.correct)
                     isInteractionBlocked = true
                     Handler(Looper.getMainLooper()).postDelayed({
                         val nextIndex = (currentImageIndex + 1) % img.size
                         onImageCompletedListener?.invoke()
-                        setCurrentImage(nextIndex) // Pasar a la siguiente imagen
-                        setFilledPixelsForNextImage() // Establecer el porcentaje de llenado correcto
-                        isInteractionBlocked = false // Liberar interacciones después de 2 segundos
-                    }, 2000) // 2000 ms = 2 segundos
+                        setCurrentImage(nextIndex)
+                        setFilledPixelsForNextImage()
+                        isInteractionBlocked = false
+                    }, 2000)
                 }
             }
         }
     }
 
-
-
-    private fun floodFill(bitmap: Bitmap, point: Point, targetColor: Int, fillColor: Int) {
+    private fun floodFill(
+        bitmap: Bitmap,
+        point: Point,
+        targetColor: Int,
+        fillColor: Int,
+        correctColor: Int
+    ) {
         val width = bitmap.width
         val height = bitmap.height
 
@@ -222,11 +261,11 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         val pixels = IntArray(width * height)
         bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
 
-        val stack = Stack<Point>()
-        stack.push(point)
+        val stack = ArrayList<Point>()
+        stack.add(point)
 
         while (stack.isNotEmpty()) {
-            val p = stack.pop()
+            val p = stack.removeAt(stack.size - 1)
             val x = p.x
             val y = p.y
 
@@ -234,29 +273,24 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
                 val index = y * width + x
                 val pixelColor = pixels[index]
 
-                if (!isNearBlack(pixelColor, currentImageIndex) && areColorsSimilar(pixelColor, targetColor) && isNearWhite(pixelColor)) {
-
+                if (!isNearBlack(pixelColor, currentImageIndex) && areColorsSimilar(pixelColor, targetColor) && correctColor != pixelColor) {
                     pixels[index] = fillColor
-                    filledPixels++ // Incrementar el conteo de píxeles rellenados
+                    filledPixels++
 
                     // Agregar los píxeles vecinos
-                    stack.push(Point(x + 1, y))
-                    stack.push(Point(x - 1, y))
-                    stack.push(Point(x, y + 1))
-                    stack.push(Point(x, y - 1))
+                    stack.add(Point(x + 1, y))
+                    stack.add(Point(x - 1, y))
+                    stack.add(Point(x, y + 1))
+                    stack.add(Point(x, y - 1))
                 }
             }
         }
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
     }
 
+
     private fun isNearBlack(color: Int, index: Int): Boolean {
         return Color.red(color) < 80 && Color.green(color) < 80 && Color.blue(color) < 80 // Mantener el umbral original
-    }
-
-    private fun isNearWhite(color: Int): Boolean {
-        val tolerance = 200
-        return Color.red(color) > tolerance && Color.green(color) > tolerance && Color.blue(color) > tolerance
     }
 
     private fun areColorsSimilar(color1: Int, color2: Int): Boolean {

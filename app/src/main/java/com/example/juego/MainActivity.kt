@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     private var currentIndex = 0
     private var tiempoEnSegundos = 0
     private val handler = Handler()
-    private var count = 0;
+    private var count = 0
     private lateinit var mediaPlayer: MediaPlayer
     private val sounds = arrayOf(R.raw.abeja, R.raw.arcoiris, R.raw.caracol, R.raw.elefante)
 
@@ -62,93 +63,84 @@ class MainActivity : AppCompatActivity() {
         paintView = findViewById(R.id.paintView)
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
 
-        // Inicializa el adaptador de colores con la paleta de colores de la abeja
+        // Inicializa el adaptador de colores
         val paleta = Paleta()
         colorAdapter = ColorAdapter(this, paleta.getColorsForCurrentImage(0)) { selectedColor ->
             paintView.setColor(selectedColor)
-            mediaPlayer = MediaPlayer.create(this, R.raw.boton)
-            mediaPlayer.start()
-            mediaPlayer.setOnCompletionListener { it.release() }
+            playSound(R.raw.boton)
         }
-
 
         recyclerView.layoutManager = GridLayoutManager(this, 4)
         recyclerView.adapter = colorAdapter
 
-        // Cargar las imágenes y colores del primer índice (abeja)
-        loadImages(currentIndex)
+        // Cargar imágenes y sonidos en un hilo diferente
+        loadResources()
+
         handler.post(runnable)
 
         // Configura el PaintView para que llame a onImageCompleted cuando una imagen se complete
         paintView.setOnImageCompletedListener { onImageCompleted() }
     }
 
+    private fun loadResources() {
+        CoroutineScope(Dispatchers.IO).launch {
+            // Pre-cargar imágenes y sonidos aquí
+            // Por ejemplo, cargar el primer drawable en un Bitmap
+            for (index in img.indices) {
+                val (colorImg, _) = img[index]
+                resources.getDrawable(colorImg, null) // Pre-cargar el drawable
+            }
+            withContext(Dispatchers.Main) {
+                loadImages(currentIndex) // Cargar la imagen inicial
+            }
+        }
+    }
+
     private fun loadImages(index: Int) {
-        if (index < img.size) { // Verifica que el índice esté dentro de los límites
+        if (index < img.size) {
             val (colorImg, _) = img[index]
             imgColor.setImageResource(colorImg) // Mostrar imagen de color
-            updateColorPalette(index) // Actualizar paleta de colores según la imagen
+            updateColorPalette(index) // Actualizar paleta de colores
         }
     }
 
     private fun updateColorPalette(index: Int) {
         val paleta = Paleta()
-        // Obtener la paleta de colores asociada con la imagen actual
-
         val colores = paleta.getColorsForCurrentImage(index)
-
-        // Actualizar el adaptador de colores con la nueva paleta
         colorAdapter.updateColors(colores)
-
-
     }
 
-    private fun playSound(count: Int) {
+    private fun playSound(soundResId: Int) {
         // Liberar el MediaPlayer anterior si ya está inicializado
         if (::mediaPlayer.isInitialized) {
             mediaPlayer.release()
         }
 
-        // Asegurarse de que el índice no exceda el tamaño del array
-        val soundResId = if (count < sounds.size) sounds[count] else sounds.last()
-
         mediaPlayer = MediaPlayer.create(this, soundResId)
         mediaPlayer.start()
-
-        // Configurar el listener para liberar el MediaPlayer después de reproducir el sonido
-        mediaPlayer.setOnCompletionListener {
-            mediaPlayer.release()
-        }
+        mediaPlayer.setOnCompletionListener { it.release() }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        // Liberar recursos si el MediaPlayer está inicializado
         if (::mediaPlayer.isInitialized) {
             mediaPlayer.release()
         }
     }
 
     private fun onImageCompleted() {
-        playSound(count)
+        playSound(sounds[count])
         count++
         if (count >= sounds.size) {
-            // Reiniciar el contador si se excede el número de sonidos
             count = 0
         }
 
-
-        // Asegúrate de que no excedas el límite de imágenes
         currentIndex++
         if (currentIndex < img.size) {
             loadImages(currentIndex)
-            paintView.setCurrentImage(currentIndex) // Cambiar la imagen en PaintView
+            paintView.setCurrentImage(currentIndex)
         } else {
-
-            Toast.makeText(this, "¡Has completado todas las imágenes!", Toast.LENGTH_SHORT).show()
-            handler.removeCallbacks(runnable)
-
+            Toast.makeText(this, "¡Juego terminado!", Toast.LENGTH_SHORT).show()
         }
     }
-
 }
