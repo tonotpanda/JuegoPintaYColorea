@@ -185,10 +185,10 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private fun startFloodFill(point: Point) {
         var mediaPlayer: MediaPlayer
         GlobalScope.launch(Dispatchers.Default) {
-            floodFill(bitmap, point, bitmap.getPixel(point.x, point.y), currentColor)
             mediaPlayer = MediaPlayer.create(context, R.raw.pintar)
             mediaPlayer.start()
             mediaPlayer.setOnCompletionListener { it.release() }
+            floodFill(bitmap, point, bitmap.getPixel(point.x, point.y), currentColor)
             withContext(Dispatchers.Main) {
                 invalidate()
                 if (isImageCompleted()) {

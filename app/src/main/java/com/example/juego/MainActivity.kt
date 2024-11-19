@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     private val handler = Handler()
     private var count = 0;
     private lateinit var mediaPlayer: MediaPlayer
-    private val sounds = arrayOf(R.raw.correct, R.raw.arcoiris, R.raw.error)
+    private val sounds = arrayOf(R.raw.abeja, R.raw.arcoiris, R.raw.caracol, R.raw.elefante)
 
     private val runnable = object : Runnable {
         override fun run() {
@@ -66,7 +66,11 @@ class MainActivity : AppCompatActivity() {
         val paleta = Paleta()
         colorAdapter = ColorAdapter(this, paleta.getColorsForCurrentImage(0)) { selectedColor ->
             paintView.setColor(selectedColor)
+            mediaPlayer = MediaPlayer.create(this, R.raw.boton)
+            mediaPlayer.start()
+            mediaPlayer.setOnCompletionListener { it.release() }
         }
+
 
         recyclerView.layoutManager = GridLayoutManager(this, 4)
         recyclerView.adapter = colorAdapter
@@ -97,15 +101,6 @@ class MainActivity : AppCompatActivity() {
         colorAdapter.updateColors(colores)
 
 
-    }
-    public fun Sonido(){
-
-        mediaPlayer = MediaPlayer.create(this, R.raw.correct)
-        mediaPlayer.start()
-
-        mediaPlayer.setOnCompletionListener {
-            mediaPlayer.release()
-        }
     }
 
     private fun playSound(count: Int) {
