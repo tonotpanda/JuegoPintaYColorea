@@ -19,7 +19,8 @@
             android:layout_height="300dp"
             android:adjustViewBounds="true"
             android:padding="10dp"
-            android:background="#99ffffff"/>
+            android:background="#99ffffff"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -32,6 +33,20 @@
             android:padding="20dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="4" />
+
+        <TextView
+            android:id="@+id/tiempo"
+            android:layout_width="370dp"
+            android:layout_height="116dp"
+            android:layout_gravity="right"
+            android:layout_margin="10dp"
+            android:background="#90858485"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text="Tiempo:"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -46,22 +61,9 @@
             android:layout_width="817dp"
             android:layout_height="741dp"
             android:layout_gravity="center"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/tiempo"
-            android:layout_width="170dp"
-            android:layout_height="50dp"
-            android:layout_gravity="right"
-            android:layout_margin="10dp"
-            android:layout_marginLeft="20dp"
-            android:background="#90858485"
-            android:gravity="center"
-            android:padding="0dp"
-            android:text="Tiempo:"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_weight="1"
+            android:background="#99ffffff"
+            android:layout_margin="60dp"/>
 
 
     </LinearLayout>
