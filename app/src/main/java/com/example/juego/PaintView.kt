@@ -121,21 +121,14 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        // Obtener el centro del PaintView
-        val centerX = width / 2f
-        val centerY = height / 2f
+        // Obtener el centro de la vista PaintView
+        val centerX = (width - bitmap.width) / 2f
+        val centerY = (height - bitmap.height) / 2f
 
-        // Obtener las dimensiones de la imagen
-        val bitmapWidth = bitmap.width.toFloat()
-        val bitmapHeight = bitmap.height.toFloat()
-
-        // Calcular las coordenadas para centrar la imagen
-        val left = centerX - bitmapWidth / 2f
-        val top = centerY - bitmapHeight / 2f
-
-        // Dibujar la imagen centrada
-        canvas.drawBitmap(bitmap, left, top, paint)
+        // Dibujar la imagen centrada en el canvas
+        canvas.drawBitmap(bitmap, centerX, centerY, paint)
     }
+
 
 
     private fun setFilledPixelsForNextImage() {
@@ -148,16 +141,16 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             0 -> filledPixels = (totalPixels * 0.093).toInt() //abeja
             1 -> filledPixels = (totalPixels * 0.45).toInt() //arcoiris
             2 -> filledPixels = (totalPixels * 0.09).toInt() //caracol
-            3 -> filledPixels = (totalPixels * 0.1043).toInt() //elefante
+            3 -> filledPixels = (totalPixels * 0.10415).toInt() //elefante
             4 -> filledPixels = (totalPixels * 0.085).toInt() //gusano1
             5 -> filledPixels = (totalPixels * 0.15).toInt() //gusano2
             6 -> filledPixels = (totalPixels * 0.045).toInt() // luna
-            7 -> filledPixels = (totalPixels * 0.2816).toInt() // medusa
-            8 -> filledPixels = (totalPixels * 0.0198).toInt() // mono1
+            7 -> filledPixels = (totalPixels * 0.2811).toInt() // medusa
+            8 -> filledPixels = (totalPixels * 0.0199).toInt() // mono1
             9 -> filledPixels = (totalPixels * 0.08).toInt() // mono2
-            10 -> filledPixels = (totalPixels * 0.2158).toInt() // mono3
-            11 -> filledPixels = (totalPixels * 0.6).toInt() // nube
-            12 -> filledPixels = (totalPixels * 0.8).toInt() // pez
+            10 -> filledPixels = (totalPixels * 0.2163).toInt() // mono3
+            11 -> filledPixels = (totalPixels * 0.08).toInt() // nube
+            12 -> filledPixels = (totalPixels * 0.05).toInt() // pez
             13 -> filledPixels = (totalPixels * 0.8).toInt() // pulpo
             14 -> filledPixels = (totalPixels * 0.38).toInt() // seta
             15 -> filledPixels = (totalPixels * 0.19).toInt() // volcan
