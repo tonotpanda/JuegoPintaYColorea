@@ -62,9 +62,8 @@
             android:layout_height="741dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="#99ffffff"
-            android:layout_margin="60dp"/>
-
-
+            android:background="@drawable/tabla"
+            android:layout_margin="60dp"
+            />
     </LinearLayout>
 </LinearLayout>

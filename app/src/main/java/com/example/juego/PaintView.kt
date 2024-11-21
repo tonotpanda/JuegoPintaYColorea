@@ -90,13 +90,19 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             val newWidth = (originalWidth * scale).toInt()
             val newHeight = (originalHeight * scale).toInt()
 
-            // Establecer límites y dibujar la imagen escalada
-            drawable?.setBounds(0, 0, newWidth, newHeight)
+            // Calcular las coordenadas para centrar la imagen
+            val centerX = w / 2f
+            val centerY = h / 2f
+            val left = centerX - (newWidth / 2f)
+            val top = centerY - (newHeight / 2f)
+
+            // Establecer límites y dibujar la imagen centrada
+            drawable?.setBounds(left.toInt(), top.toInt(), (left + newWidth).toInt(), (top + newHeight).toInt())
             drawable?.draw(canvasBitmap)
 
             referenceBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888)
             val referenceCanvas = Canvas(referenceBitmap)
-            referenceDrawable?.setBounds(0, 0, newWidth, newHeight)
+            referenceDrawable?.setBounds(left.toInt(), top.toInt(), (left + newWidth).toInt(), (top + newHeight).toInt())
             referenceDrawable?.draw(referenceCanvas)
 
             // Inicializar el conteo de píxeles
@@ -118,15 +124,10 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     }
 
 
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
-        // Obtener el centro de la vista PaintView
-        val centerX = (width - bitmap.width) / 2f
-        val centerY = (height - bitmap.height) / 2f
-
-        // Dibujar la imagen centrada en el canvas
-        canvas.drawBitmap(bitmap, centerX, centerY, paint)
+        canvas.drawBitmap(bitmap, 0f, 0f, null)
     }
 
 
