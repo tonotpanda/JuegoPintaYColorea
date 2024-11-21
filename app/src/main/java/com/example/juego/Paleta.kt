@@ -43,7 +43,6 @@ class Paleta {
     )
     val colorsGusano2 = listOf(
         Color.parseColor("#ffb3bb"),
-        Color.parseColor("#ffc3b8"),
         Color.parseColor("#ff7c77")
     )
     val colorsLuna = listOf(
