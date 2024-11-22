@@ -1,8 +1,6 @@
 package com.example.juego
-
 import android.content.Context
 import android.graphics.*
-import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
@@ -12,9 +10,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.*
 import java.util.Stack
-
 class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
-
     private var paint: Paint = Paint()
     private var currentColor: Int = Color.RED
     private lateinit var bitmap: Bitmap
@@ -23,14 +19,12 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private var errorCount = 0
     private var currentImageIndex = 0
     private var onImageCompletedListener: (() -> Unit)? = null
+    private var isImageCompleted = false
     private var isWaitingForNextImage = false
     private var isInteractionBlocked = false
-    lateinit var mediaPlayer: MediaPlayer
-
     // Variables para el porcentaje de acierto
     private var totalPixels = 0
     private var filledPixels = 0
-
     val img = listOf(
         Pair(R.drawable.abeja_color, R.drawable.abeja_blanca),
         Pair(R.drawable.arcoiris_color, R.drawable.arcoiris_blanco),
@@ -49,7 +43,6 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         Pair(R.drawable.seta_color, R.drawable.seta_blanca),
         Pair(R.drawable.volcan_color, R.drawable.volcan_blanco)
     )
-
     init {
         paint.isAntiAlias = true
         paint.isDither = true
@@ -58,60 +51,33 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         paint.strokeCap = Paint.Cap.ROUND
         paint.color = currentColor
     }
-
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         canvasBitmap = Canvas(bitmap)
         loadImage(currentImageIndex, w, h)
     }
-
-
     private fun loadImage(index: Int, w: Int, h: Int) {
         if (index < 0 || index >= img.size) {
             throw IllegalArgumentException("Índice de imagen fuera de rango")
         }
-
         // Limpiar el bitmap antes de cargar la nueva imagen
         canvasBitmap.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
-
         try {
             val drawable = ContextCompat.getDrawable(context, img[index].second)
-            val referenceDrawable = ContextCompat.getDrawable(context, img[index].first)
-
-            // Obtener dimensiones originales
-            val originalWidth = drawable?.intrinsicWidth ?: 0
-            val originalHeight = drawable?.intrinsicHeight ?: 0
-
-            // Calcular la escala para mantener proporciones
-            val scale = Math.min(w.toFloat() / originalWidth, h.toFloat() / originalHeight)
-
-            // Calcular nuevas dimensiones
-            val newWidth = (originalWidth * scale).toInt()
-            val newHeight = (originalHeight * scale).toInt()
-
-            // Calcular las coordenadas para centrar la imagen
-            val centerX = w / 2f
-            val centerY = h / 2f
-            val left = centerX - (newWidth / 2f)
-            val top = centerY - (newHeight / 2f)
-
-            // Establecer límites y dibujar la imagen centrada
-            drawable?.setBounds(left.toInt(), top.toInt(), (left + newWidth).toInt(), (top + newHeight).toInt())
+            drawable?.setBounds(0, 0, w, h)
             drawable?.draw(canvasBitmap)
-
-            referenceBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888)
+            val referenceDrawable = ContextCompat.getDrawable(context, img[index].first)
+            referenceBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
             val referenceCanvas = Canvas(referenceBitmap)
-            referenceDrawable?.setBounds(left.toInt(), top.toInt(), (left + newWidth).toInt(), (top + newHeight).toInt())
+            referenceDrawable?.setBounds(0, 0, w, h)
             referenceDrawable?.draw(referenceCanvas)
-
             // Inicializar el conteo de píxeles
             totalPixels = 0 // Reiniciar totalPixels
             filledPixels = 0 // Reiniciar filledPixels
-
             // Contar solo los píxeles válidos
-            for (y in 0 until newHeight) {
-                for (x in 0 until newWidth) {
+            for (y in 0 until h) {
+                for (x in 0 until w) {
                     if (!isNearBlack(referenceBitmap.getPixel(x, y), currentImageIndex)) {
                         totalPixels++ // Solo contar píxeles que no son casi negros
                     }
@@ -122,92 +88,49 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             Toast.makeText(context, "Error al cargar la imagen", Toast.LENGTH_SHORT).show()
         }
     }
-
-
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawBitmap(bitmap, 0f, 0f, null)
     }
-
-
-
     private fun setFilledPixelsForNextImage() {
         // Reiniciar filledPixels
         filledPixels = 0
-
         // Verificamos el porcentaje de píxeles pintados por imagen
         when (currentImageIndex) {
-
-            0 -> filledPixels = (totalPixels * 0.093).toInt() //abeja
-            1 -> filledPixels = (totalPixels * 0.45).toInt() //arcoiris
-            2 -> filledPixels = (totalPixels * 0.09).toInt() //caracol
-            3 -> filledPixels = (totalPixels * 0.10415).toInt() //elefante
-            4 -> filledPixels = (totalPixels * 0.085).toInt() //gusano1
-            5 -> filledPixels = (totalPixels * 0.15).toInt() //gusano2
-            6 -> filledPixels = (totalPixels * 0.045).toInt() // luna
-            7 -> filledPixels = (totalPixels * 0.2811).toInt() // medusa
-            8 -> filledPixels = (totalPixels * 0.0199).toInt() // mono1
-            9 -> filledPixels = (totalPixels * 0.08).toInt() // mono2
-            10 -> filledPixels = (totalPixels * 0.2163).toInt() // mono3
-            11 -> filledPixels = (totalPixels * 0.08).toInt() // nube
-            12 -> filledPixels = (totalPixels * 0.05).toInt() // pez
-            13 -> filledPixels = (totalPixels * 0.8).toInt() // pulpo
-            14 -> filledPixels = (totalPixels * 0.38).toInt() // seta
-            15 -> filledPixels = (totalPixels * 0.19).toInt() // volcan
+            0 -> filledPixels = (totalPixels * 0.22).toInt() //abeja
+            1 -> filledPixels = (totalPixels * 0.42).toInt() //arociris
+            2 -> filledPixels = (totalPixels * 0.077).toInt() //caracol
+            3 -> filledPixels = (totalPixels * 0.0818).toInt() //elefante
+            4 -> filledPixels = (totalPixels * 0.075).toInt() //gusano1
+            5 -> filledPixels = (totalPixels * 0.14).toInt() //gusano2
+            6 -> filledPixels = (totalPixels * 0.04).toInt() //luna
+            7 -> filledPixels = (totalPixels * 0.240).toInt() //medusa
+            8 -> filledPixels = (totalPixels * 0.01).toInt() //mono1
+            9 -> filledPixels = (totalPixels * 0.07).toInt() //mono2
+            10 -> filledPixels = (totalPixels * 0.194).toInt() //mono3
+            11 -> filledPixels = (totalPixels * 0.08).toInt() //nube
+            12 -> filledPixels = (totalPixels * 0.07).toInt() //pez
+            13 -> filledPixels = (totalPixels * 0.05).toInt() //pulpo
+            14 -> filledPixels = (totalPixels * 0.22).toInt() //seta
+            15 -> filledPixels = (totalPixels * 0.20).toInt() //volcan
             else -> filledPixels = totalPixels // Por defecto, llena toda la imagen
         }
     }
-
-    private fun playSound(soundResId: Int) {
-
-        // Liberar el MediaPlayer anterior si ya está inicializado
-        if (::mediaPlayer.isInitialized) {
-            mediaPlayer.release()
-        }
-        mediaPlayer = MediaPlayer.create(context, soundResId)
-        mediaPlayer.start()
-        mediaPlayer.setOnCompletionListener { it.release() }
-
-    }
-
-    init {
-        // Pre-cargar imágenes y sonidos si es necesario
-        preloadResources()
-    }
-
-    private fun preloadResources() {
-        // Cargar imágenes en caché o inicializar MediaPlayer aquí
-        // Por ejemplo, puedes cargar el primer drawable en un Bitmap
-        if (img.isNotEmpty()) {
-            val drawable = ContextCompat.getDrawable(context, img[0].first)
-            val bitmap = Bitmap.createBitmap(drawable!!.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
-            drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-            drawable.draw(canvas)
-            referenceBitmap = bitmap // Guarda el bitmap en caché
-        }
-    }
-
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        // Si las interacciones están bloqueadas, ignoramos los toques
         if (isInteractionBlocked) {
             return false
         }
-
         if (event.action == MotionEvent.ACTION_DOWN) {
             val x = event.x.toInt()
             val y = event.y.toInt()
-
-            // Verificar que el clic esté dentro de los límites
             if (x in 0 until bitmap.width && y in 0 until bitmap.height) {
                 val correctColor = referenceBitmap.getPixel(x, y)
-
                 if (!isNearBlack(correctColor, currentImageIndex)) {
                     if (areColorsSimilar(currentColor, correctColor)) {
-                        playSound(R.raw.pintar)
-                        startFloodFill(Point(x, y), correctColor)
+                        startFloodFill(Point(x, y))
                     } else {
-                        playSound(R.raw.error)
+                        Toast.makeText(context, "Color incorrecto", Toast.LENGTH_SHORT).show()
                         errorCount++
                     }
                 }
@@ -215,105 +138,84 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         }
         return true
     }
-
-    //hola
-    private fun startFloodFill(point: Point, correctColor: Int) {
-        CoroutineScope(Dispatchers.Default).launch {
-            floodFill(bitmap, point, bitmap.getPixel(point.x, point.y), currentColor, correctColor)
+    private fun startFloodFill(point: Point) {
+        GlobalScope.launch(Dispatchers.Default) {
+            floodFill(bitmap, point, bitmap.getPixel(point.x, point.y), currentColor)
             withContext(Dispatchers.Main) {
-                invalidate() // Asegúrate de llamar a invalidate solo una vez después de completar el relleno
+                invalidate()
                 if (isImageCompleted()) {
-                    playSound(R.raw.correct)
+                    // Bloquear interacciones antes de pasar a la siguiente imagen
                     isInteractionBlocked = true
                     Handler(Looper.getMainLooper()).postDelayed({
                         val nextIndex = (currentImageIndex + 1) % img.size
                         onImageCompletedListener?.invoke()
-                        setCurrentImage(nextIndex)
-                        setFilledPixelsForNextImage()
-                        isInteractionBlocked = false
-                    }, 2000)
+                        setCurrentImage(nextIndex) // Pasar a la siguiente imagen
+                        setFilledPixelsForNextImage() // Establecer el porcentaje de llenado correcto
+                        isInteractionBlocked = false // Liberar interacciones después de 2 segundos
+                    }, 2000) // 2000 ms = 2 segundos
                 }
             }
         }
     }
-
-    private fun floodFill(
-        bitmap: Bitmap,
-        point: Point,
-        targetColor: Int,
-        fillColor: Int,
-        correctColor: Int
-    ) {
+    private fun floodFill(bitmap: Bitmap, point: Point, targetColor: Int, fillColor: Int) {
         val width = bitmap.width
         val height = bitmap.height
-
         if (targetColor == fillColor || isNearBlack(targetColor, currentImageIndex)) return
-
         val pixels = IntArray(width * height)
         bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
-
-        val stack = ArrayList<Point>()
-        stack.add(point)
-
+        val stack = Stack<Point>()
+        stack.push(point)
         while (stack.isNotEmpty()) {
-            val p = stack.removeAt(stack.size - 1)
+            val p = stack.pop()
             val x = p.x
             val y = p.y
-
             if (x in 0 until width && y in 0 until height) {
                 val index = y * width + x
                 val pixelColor = pixels[index]
-
-                if (!isNearBlack(pixelColor, currentImageIndex) && areColorsSimilar(pixelColor, targetColor) && correctColor != pixelColor) {
+                if (!isNearBlack(pixelColor, currentImageIndex) && areColorsSimilar(pixelColor, targetColor) && isNearWhite(pixelColor)) {
                     pixels[index] = fillColor
-                    filledPixels++
-
+                    filledPixels++ // Incrementar el conteo de píxeles rellenados
                     // Agregar los píxeles vecinos
-                    stack.add(Point(x + 1, y))
-                    stack.add(Point(x - 1, y))
-                    stack.add(Point(x, y + 1))
-                    stack.add(Point(x, y - 1))
+                    stack.push(Point(x + 1, y))
+                    stack.push(Point(x - 1, y))
+                    stack.push(Point(x, y + 1))
+                    stack.push(Point(x, y - 1))
                 }
             }
         }
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
     }
-
-
     private fun isNearBlack(color: Int, index: Int): Boolean {
         return Color.red(color) < 80 && Color.green(color) < 80 && Color.blue(color) < 80 // Mantener el umbral original
     }
-
+    private fun isNearWhite(color: Int): Boolean {
+        val tolerance = 200
+        return Color.red(color) > tolerance && Color.green(color) > tolerance && Color.blue(color) > tolerance
+    }
     private fun areColorsSimilar(color1: Int, color2: Int): Boolean {
         val tolerance = 30 // Mantener la tolerancia original
         return Math.abs(Color.red(color1) - Color.red(color2)) < tolerance &&
                 Math.abs(Color.green(color1) - Color.green(color2)) < tolerance &&
                 Math.abs(Color.blue(color1) - Color.blue(color2)) < tolerance
     }
-
     private fun isImageCompleted(): Boolean {
-
         val completionPercentage: Int
         if (totalPixels > 0) {
             completionPercentage = (filledPixels.toFloat() / totalPixels * 106).toInt()
         } else {
             completionPercentage = 0 // Si no hay píxeles válidos, el porcentaje es 0
         }
-
-
         if (completionPercentage >= 100) {
+            Toast.makeText(context, "¡Imagen completada al 100%!", Toast.LENGTH_SHORT).show()
             return true
         } else {
             return false
         }
-
     }
-
     fun setColor(color: Int) {
         currentColor = color
         paint.color = currentColor
     }
-
     fun setCurrentImage(index: Int) {
         if (!isWaitingForNextImage) { // Asegurarse de que no se pase a la siguiente imagen mientras se espera
             currentImageIndex = index
@@ -321,7 +223,6 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             invalidate()
         }
     }
-
     fun setOnImageCompletedListener(listener: () -> Unit) {
         onImageCompletedListener = listener
     }
