@@ -55,9 +55,10 @@ class ImagenSeleccionado : AppCompatActivity() {
 
     private fun navigateToMainActivity(imageName: String, imageId: Int) {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("character_type", characterType)  // Pasar tipo de personaje
-        intent.putExtra("character_name", imageName)      // Pasar nombre de la imagen
-        intent.putExtra("image_id", imageId)              // Pasar ID de la imagen
+        intent.putExtra("character_type", characterType)
+        intent.putExtra("character_name", imageName)
+        intent.putExtra("image_id", imageId)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) // Agregar estas banderas
         startActivity(intent)
     }
 }
