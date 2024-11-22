@@ -98,20 +98,20 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         // Verificamos el porcentaje de píxeles pintados por imagen
         when (currentImageIndex) {
             0 -> filledPixels = (totalPixels * 0.22).toInt() //abeja
-            1 -> filledPixels = (totalPixels * 0.42).toInt() //arociris
-            2 -> filledPixels = (totalPixels * 0.077).toInt() //caracol
+            1 -> filledPixels = (totalPixels * 0.408).toInt() //arociris
+            2 -> filledPixels = (totalPixels * 0.076).toInt() //caracol
             3 -> filledPixels = (totalPixels * 0.0818).toInt() //elefante
             4 -> filledPixels = (totalPixels * 0.075).toInt() //gusano1
             5 -> filledPixels = (totalPixels * 0.14).toInt() //gusano2
             6 -> filledPixels = (totalPixels * 0.04).toInt() //luna
             7 -> filledPixels = (totalPixels * 0.240).toInt() //medusa
-            8 -> filledPixels = (totalPixels * 0.01).toInt() //mono1
+            8 -> filledPixels = (totalPixels * 0.015).toInt() //mono1
             9 -> filledPixels = (totalPixels * 0.07).toInt() //mono2
-            10 -> filledPixels = (totalPixels * 0.194).toInt() //mono3
+            10 -> filledPixels = (totalPixels * 0.19457).toInt() //mono3
             11 -> filledPixels = (totalPixels * 0.08).toInt() //nube
-            12 -> filledPixels = (totalPixels * 0.07).toInt() //pez
-            13 -> filledPixels = (totalPixels * 0.05).toInt() //pulpo
-            14 -> filledPixels = (totalPixels * 0.22).toInt() //seta
+            12 -> filledPixels = (totalPixels * 0.065).toInt() //pez
+            13 -> filledPixels = (totalPixels * 0.063).toInt() //pulpo
+            14 -> filledPixels = (totalPixels * 0.10).toInt() //seta
             15 -> filledPixels = (totalPixels * 0.20).toInt() //volcan
             else -> filledPixels = totalPixels // Por defecto, llena toda la imagen
         }
