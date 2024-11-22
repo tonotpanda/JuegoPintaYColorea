@@ -1,6 +1,7 @@
 package com.example.juego
 
 import ColorAdapter
+import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -80,6 +81,11 @@ class MainActivity : AppCompatActivity() {
 
         // Configura el PaintView para que llame a onImageCompleted cuando una imagen se complete
         paintView.setOnImageCompletedListener { onImageCompleted() }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        // No hacer nada cuando se presiona el botón de retroceso
     }
 
     private fun loadResources() {
