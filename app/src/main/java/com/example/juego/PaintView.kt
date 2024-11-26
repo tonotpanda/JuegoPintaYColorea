@@ -34,11 +34,11 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         Pair(R.drawable.caracol_color, R.drawable.caracol_blanco),
         Pair(R.drawable.elefante_color, R.drawable.elefante_blanco),
         Pair(R.drawable.gusano1_color, R.drawable.gusano1_blanco),
-        Pair(R.drawable.gusano2_color, R.drawable.gusano2_blanco),
+        Pair(R.drawable.mono2_color, R.drawable.mono2_blanco),
         Pair(R.drawable.luna_color, R.drawable.luna_blanca),
         Pair(R.drawable.medusa_color, R.drawable.medusa_blanca),
         Pair(R.drawable.mono1_color, R.drawable.mono1_blanco),
-        Pair(R.drawable.mono2_color, R.drawable.mono2_blanco),
+        Pair(R.drawable.gusano2_color, R.drawable.gusano2_blanco),
         Pair(R.drawable.mono3_color, R.drawable.mono3_blanco),
         Pair(R.drawable.nube_color, R.drawable.nube_blanca),
         Pair(R.drawable.pez_color, R.drawable.pez_blanco),
@@ -153,19 +153,19 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             0 -> filledPixels = (totalPixels * 0.22).toInt() //abeja
             1 -> filledPixels = (totalPixels * 0.408).toInt() //arociris
             2 -> filledPixels = (totalPixels * 0.076).toInt() //caracol
-            3 -> filledPixels = (totalPixels * 0.0935).toInt() //elefante
+            3 -> filledPixels = (totalPixels * 0.0932).toInt() //elefante
             4 -> filledPixels = (totalPixels * 0.075).toInt() //gusano1
-            5 -> filledPixels = (totalPixels * 0.135).toInt() //gusano2
+            5 -> filledPixels = (totalPixels * 0.07).toInt() //mono2
             6 -> filledPixels = (totalPixels * 0.04).toInt() //luna
-            7 -> filledPixels = (totalPixels * 0.2389).toInt() //medusa
+            7 -> filledPixels = (totalPixels * 0.239).toInt() //medusa
             8 -> filledPixels = (totalPixels * 0.015).toInt() //mono1
-            9 -> filledPixels = (totalPixels * 0.07).toInt() //mono2
-            10 -> filledPixels = (totalPixels * 0.199).toInt() //mono3
+            9 -> filledPixels = (totalPixels * 0.135).toInt() //gusano2
+            10 -> filledPixels = (totalPixels * 0.198).toInt() //mono3
             11 -> filledPixels = (totalPixels * 0.08).toInt() //nube
             12 -> filledPixels = (totalPixels * 0.065).toInt() //pez
             13 -> filledPixels = (totalPixels * 0.09).toInt() //pulpo
-            14 -> filledPixels = (totalPixels * 0.372).toInt() //seta
-            15 -> filledPixels = (totalPixels * 0.15).toInt() //volcan
+            14 -> filledPixels = (totalPixels * 0.371).toInt() //seta
+            15 -> filledPixels = (totalPixels * 0.13).toInt() //volcan
             else -> filledPixels = totalPixels // Por defecto, llena toda la imagen
         }
     }

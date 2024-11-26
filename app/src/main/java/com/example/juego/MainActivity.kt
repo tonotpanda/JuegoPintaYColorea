@@ -28,11 +28,11 @@ class MainActivity : AppCompatActivity() {
         Pair(R.drawable.caracol_color, R.drawable.caracol_blanco),
         Pair(R.drawable.elefante_color, R.drawable.elefante_blanco),
         Pair(R.drawable.gusano1_color, R.drawable.gusano1_blanco),
-        Pair(R.drawable.gusano2_color, R.drawable.gusano2_blanco),
+        Pair(R.drawable.mono2_color, R.drawable.mono2_blanco),
         Pair(R.drawable.luna_color, R.drawable.luna_blanca),
         Pair(R.drawable.medusa_color, R.drawable.medusa_blanca),
         Pair(R.drawable.mono1_color, R.drawable.mono1_blanco),
-        Pair(R.drawable.mono2_color, R.drawable.mono2_blanco),
+        Pair(R.drawable.gusano2_color, R.drawable.gusano2_blanco),
         Pair(R.drawable.mono3_color, R.drawable.mono3_blanco),
         Pair(R.drawable.nube_color, R.drawable.nube_blanca),
         Pair(R.drawable.pez_color, R.drawable.pez_blanco),
@@ -168,22 +168,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onImageCompleted() {
-        playSound(sounds[count])
-        count++
-        if (count >= sounds.size) {
-            count = 0
-        }
 
-        dibujosHechos++
         currentIndex++
         if (!juegoAcabado){
         if (currentIndex < img.size) {
+            playSound(sounds[count])
+            count++
+            if (count >= sounds.size) {
+                count = 0
+            }
             juegoAcabado = false
         }else{
             juegoAcabado = true
         }
         }
         if (!juegoAcabado) {
+            dibujosHechos++
             loadImages(currentIndex)
             paintView.setCurrentImage(currentIndex)
         } else {
