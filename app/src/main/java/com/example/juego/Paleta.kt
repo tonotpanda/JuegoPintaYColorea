@@ -109,11 +109,11 @@ class Paleta {
             2 -> colorsCaracol
             3 -> colorsElefante
             4 -> colorsGusano1
-            5 -> colorsGusano2
+            5 -> colorsMono2
             6 -> colorsLuna
             7 -> colorsMedusa
             8 -> colorsMono1
-            9 -> colorsMono2
+            9 -> colorsGusano2
             10 -> colorsMono3
             11 -> colorsNube
             12 -> colorsPez
