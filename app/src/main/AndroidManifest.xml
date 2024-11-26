@@ -26,6 +26,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+        <activity
+            android:name=".PantallaFinalActivity"
+            android:exported="true" />
     </application>
 
     <!-- No se requieren permisos adicionales para acceso a almacenamiento privado -->

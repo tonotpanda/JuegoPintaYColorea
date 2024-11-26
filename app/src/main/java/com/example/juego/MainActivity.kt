@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.*
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.Button
 import org.json.JSONArray
@@ -190,6 +191,10 @@ class MainActivity : AppCompatActivity() {
             val errores = paintView.getErrorCount()
             juntarEstadisticas(errores)
             Toast.makeText(this, "¡Juego terminado!", Toast.LENGTH_SHORT).show()
+            intent = Intent()
+            val intent = Intent(this, PantallaFinalActivity::class.java)
+            startActivity(intent)
+
         }
     }
 
