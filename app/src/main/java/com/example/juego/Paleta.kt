@@ -25,7 +25,6 @@ class Paleta {
         Color.parseColor("#f0776f")
     )
     val colorsElefante = listOf(
-        Color.parseColor("#53accc"),
         Color.parseColor("#c4a68d"),
         Color.parseColor("#e28270"),
         Color.parseColor("#e58596"),
