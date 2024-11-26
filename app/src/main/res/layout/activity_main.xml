@@ -14,6 +14,14 @@
         android:orientation="vertical"
         android:padding="0dp">
 
+        <Button
+            android:id="@+id/Btn_salir"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:backgroundTint="#40ff0000"
+            android:text="Salir"
+            android:textSize="12sp"
+            />
         <ImageView
             android:id="@+id/img_color"
             android:layout_width="match_parent"
@@ -31,7 +39,7 @@
             android:background="@drawable/paleta_madera"
             android:clipToPadding="false"
             android:padding="20dp"
-            android:layout_marginBottom="165dp"
+            android:layout_marginBottom="100dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="4" />
 
@@ -39,12 +47,13 @@
             android:id="@+id/tiempo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+
             android:background="#90858485"
             android:gravity="center"
             android:text="Tiempo:"
             android:textColor="@color/white"
             android:textSize="30sp"
+            android:layout_marginBottom="75dp"
             android:textStyle="bold" />
     </LinearLayout>
 

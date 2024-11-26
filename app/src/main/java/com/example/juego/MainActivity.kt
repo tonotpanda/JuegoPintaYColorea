@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.*
 import android.content.Context
 import android.util.Log
+import android.widget.Button
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -46,12 +47,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var imgColor: ImageView
     private lateinit var paintView: PaintView
     private lateinit var colorAdapter: ColorAdapter
+    private lateinit var btn_Salir: Button
     private var currentIndex = 0
     private var tiempoEnSegundos = 0
     private val handler = Handler()
     private var count = 0
+    private var dibujosHechos = 0
+    private var juegoAcabado = false
     private lateinit var mediaPlayer: MediaPlayer
+
     private val sounds = arrayOf(R.raw.abeja, R.raw.arcoiris, R.raw.caracol, R.raw.elefante)
+
 
 
     private val runnable = object : Runnable {
@@ -60,10 +66,17 @@ class MainActivity : AppCompatActivity() {
             val minutos = tiempoEnSegundos / 60
             val segundos = tiempoEnSegundos % 60
             tiempoTextView.text = String.format("Tiempo: %02d:%02d", minutos, segundos)
+            if (tiempoEnSegundos > (7 * 60 + 30)) { //
+                juegoAcabado = true
+                onImageCompleted()
+            }
             handler.postDelayed(this, 1000)
+
         }
     }
 
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -74,6 +87,7 @@ class MainActivity : AppCompatActivity() {
         tiempoTextView = findViewById(R.id.tiempo)
         imgColor = findViewById(R.id.img_color)
         paintView = findViewById(R.id.paintView)
+        btn_Salir = findViewById(R.id.Btn_salir)
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
 
         // Inicializa el adaptador de colores
@@ -90,6 +104,13 @@ class MainActivity : AppCompatActivity() {
         loadResources()
 
         handler.post(runnable)
+
+        btn_Salir.setOnLongClickListener{
+            juegoAcabado = true
+            onImageCompleted()
+            finish()
+            true
+        }
 
         // Configura el PaintView para que llame a onImageCompleted cuando una imagen se complete
         paintView.setOnImageCompletedListener { onImageCompleted() }
@@ -153,24 +174,33 @@ class MainActivity : AppCompatActivity() {
             count = 0
         }
 
+        dibujosHechos++
         currentIndex++
+        if (!juegoAcabado){
         if (currentIndex < img.size) {
+            juegoAcabado = false
+        }else{
+            juegoAcabado = true
+        }
+        }
+        if (!juegoAcabado) {
             loadImages(currentIndex)
             paintView.setCurrentImage(currentIndex)
         } else {
-            val errorCount = paintView.getErrorCount();
-            juntarEstadisticas(errorCount);
+            val errores = paintView.getErrorCount()
+            juntarEstadisticas(errores)
             Toast.makeText(this, "¡Juego terminado!", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun juntarEstadisticas(errorCount: Int) {
+    private fun juntarEstadisticas(errores: Int) {
         // Asegurarte de que no sean nulos
-        val tipo = characterType ?: "Desconocido"
-        val nombre = imageName ?: "Desconocido"
+        val personage = characterType ?: "Desconocido"
+        val icono = imageName ?: "Desconocido"
+        val dibujosCompletados = dibujosHechos
         val tiempo = tiempoTextView.text.toString()
 
-        val alumno = Alumno(tipo, nombre, tiempo, errorCount)
+        val alumno = Alumno(personage, icono, dibujosCompletados, tiempo, errores)
         añadirExploradorEnJson(this, alumno)
     }
 
@@ -189,6 +219,7 @@ class MainActivity : AppCompatActivity() {
         jsonArray.put(JSONObject().apply {
             put("Personage", nuevoAlumno.personage)
             put("Icono", nuevoAlumno.icono)
+            put("Dibujos Completados", nuevoAlumno.dibujosCompletados)
             put("Tiempo", nuevoAlumno.tiempo)
             put("Errores", nuevoAlumno.errores)
         })
