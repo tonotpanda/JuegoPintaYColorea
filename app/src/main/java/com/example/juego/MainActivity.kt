@@ -12,6 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.*
+import android.content.Context
+import android.util.Log
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
+import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +40,8 @@ class MainActivity : AppCompatActivity() {
         Pair(R.drawable.volcan_color, R.drawable.volcan_blanco)
     )
 
+    private var characterType: String? = null
+    private var imageName: String? = null
     private lateinit var tiempoTextView: TextView
     private lateinit var imgColor: ImageView
     private lateinit var paintView: PaintView
@@ -44,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     private var count = 0
     private lateinit var mediaPlayer: MediaPlayer
     private val sounds = arrayOf(R.raw.abeja, R.raw.arcoiris, R.raw.caracol, R.raw.elefante)
+
 
     private val runnable = object : Runnable {
         override fun run() {
@@ -58,6 +67,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        characterType = intent.getStringExtra("character_type")
+        imageName = intent.getStringExtra("character_name")
 
         tiempoTextView = findViewById(R.id.tiempo)
         imgColor = findViewById(R.id.img_color)
@@ -146,7 +158,48 @@ class MainActivity : AppCompatActivity() {
             loadImages(currentIndex)
             paintView.setCurrentImage(currentIndex)
         } else {
+            val errorCount = paintView.getErrorCount();
+            juntarEstadisticas(errorCount);
             Toast.makeText(this, "¡Juego terminado!", Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun juntarEstadisticas(errorCount: Int) {
+        // Asegurarte de que no sean nulos
+        val tipo = characterType ?: "Desconocido"
+        val nombre = imageName ?: "Desconocido"
+        val tiempo = tiempoTextView.text.toString()
+
+        val alumno = Alumno(tipo, nombre, tiempo, errorCount)
+        añadirExploradorEnJson(this, alumno)
+    }
+
+
+    private fun añadirExploradorEnJson(context: Context, nuevoAlumno: Alumno) {
+        val archivo = File(getExternalFilesDir(null), "Resultado_Alumnos.json")
+        val jsonArray = if (archivo.exists()) {
+            // Leer el contenido existente y convertirlo a JSONArray
+            JSONArray(archivo.readText())
+        } else {
+            // Crear un nuevo JSONArray si el archivo no existe
+            JSONArray()
+        }
+
+        // Añadir el nuevo explorador
+        jsonArray.put(JSONObject().apply {
+            put("Personage", nuevoAlumno.personage)
+            put("Icono", nuevoAlumno.icono)
+            put("Tiempo", nuevoAlumno.tiempo)
+            put("Errores", nuevoAlumno.errores)
+        })
+
+        // Guardar el JSONArray actualizado en el archivo
+        FileOutputStream(archivo).use { fos ->
+            fos.write(jsonArray.toString().toByteArray())
+        }
+
+        // Agrega un log para verificar que se ha creado el archivo
+        Log.d("ArchivoJSON", "Archivo creado en: ${archivo.absolutePath}")
+    }
+
 }

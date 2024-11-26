@@ -153,19 +153,19 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             0 -> filledPixels = (totalPixels * 0.22).toInt() //abeja
             1 -> filledPixels = (totalPixels * 0.408).toInt() //arociris
             2 -> filledPixels = (totalPixels * 0.076).toInt() //caracol
-            3 -> filledPixels = (totalPixels * 0.0818).toInt() //elefante
+            3 -> filledPixels = (totalPixels * 0.0935).toInt() //elefante
             4 -> filledPixels = (totalPixels * 0.075).toInt() //gusano1
-            5 -> filledPixels = (totalPixels * 0.13).toInt() //gusano2
+            5 -> filledPixels = (totalPixels * 0.135).toInt() //gusano2
             6 -> filledPixels = (totalPixels * 0.04).toInt() //luna
-            7 -> filledPixels = (totalPixels * 0.240).toInt() //medusa
-            8 -> filledPixels = (totalPixels * 0.013).toInt() //mono1
+            7 -> filledPixels = (totalPixels * 0.2389).toInt() //medusa
+            8 -> filledPixels = (totalPixels * 0.015).toInt() //mono1
             9 -> filledPixels = (totalPixels * 0.07).toInt() //mono2
-            10 -> filledPixels = (totalPixels * 0.1832).toInt() //mono3
+            10 -> filledPixels = (totalPixels * 0.199).toInt() //mono3
             11 -> filledPixels = (totalPixels * 0.08).toInt() //nube
             12 -> filledPixels = (totalPixels * 0.065).toInt() //pez
-            13 -> filledPixels = (totalPixels * 0.065).toInt() //pulpo
-            14 -> filledPixels = (totalPixels * 0.15).toInt() //seta
-            15 -> filledPixels = (totalPixels * 0.18).toInt() //volcan
+            13 -> filledPixels = (totalPixels * 0.09).toInt() //pulpo
+            14 -> filledPixels = (totalPixels * 0.372).toInt() //seta
+            15 -> filledPixels = (totalPixels * 0.15).toInt() //volcan
             else -> filledPixels = totalPixels // Por defecto, llena toda la imagen
         }
     }
@@ -295,4 +295,8 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     fun setOnImageCompletedListener(listener: () -> Unit) {
         onImageCompletedListener = listener
     }
+    fun getErrorCount(): Int {
+        return errorCount
+    }
+
 }
