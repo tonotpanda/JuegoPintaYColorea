@@ -70,8 +70,7 @@ class Paleta {
         Color.parseColor("#358500"),
         Color.parseColor("#aa6d2a"),
         Color.parseColor("#ffdfa1"),
-        Color.parseColor("#fba368"),
-        Color.parseColor("#e87c60")
+        Color.parseColor("#fba368")
     )
     val colorsNube = listOf(
         Color.parseColor("#0eb6d0"),

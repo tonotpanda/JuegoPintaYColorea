@@ -50,8 +50,6 @@ class ColorAdapter(
         holder.colorImageView.background = borderDrawable
     }
 
-//hola
-
     override fun getItemCount(): Int = colors.size
 
     fun updateColors(newColors: List<Int>) {
