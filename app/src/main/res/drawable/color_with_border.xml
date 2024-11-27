@@ -1,0 +1,15 @@
+<!-- res/drawable/color_with_border.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@android:color/transparent" />
+            <stroke android:width="2dp" android:color="@android:color/black" />
+            <corners android:radius="30dp" /> <!-- Ajusta el radio según sea necesario -->
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+</layer-list>
