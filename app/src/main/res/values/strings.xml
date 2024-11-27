@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Juego</string>
+    <string name="reiniciar_juego" />
 </resources>

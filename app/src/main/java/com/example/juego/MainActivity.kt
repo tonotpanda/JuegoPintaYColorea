@@ -191,10 +191,16 @@ class MainActivity : AppCompatActivity() {
             val errores = paintView.getErrorCount()
             juntarEstadisticas(errores)
             Toast.makeText(this, "¡Juego terminado!", Toast.LENGTH_SHORT).show()
-            intent = Intent()
-            val intent = Intent(this, PantallaFinalActivity::class.java)
-            startActivity(intent)
 
+            // Crear el Intent para pasar los datos
+            val intent = Intent(this, PantallaFinalActivity::class.java)
+            // Pasa los datos al Intent
+            intent.putExtra("character_type", characterType)
+            intent.putExtra("character_name", imageName)
+            intent.putExtra("errores", errores)
+            intent.putExtra("dibujos_completados", dibujosHechos)
+            intent.putExtra("tiempo", tiempoTextView.text.toString())
+            startActivity(intent)
         }
     }
 
