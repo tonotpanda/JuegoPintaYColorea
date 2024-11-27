@@ -50,7 +50,7 @@ class ColorAdapter(
         holder.colorImageView.background = borderDrawable
     }
 
-
+//hola
 
     override fun getItemCount(): Int = colors.size
 
