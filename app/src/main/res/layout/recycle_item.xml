@@ -2,8 +2,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="5dp"
     app:cardCornerRadius="30dp"
+    android:layout_margin="8dp"
     app:cardBackgroundColor="@android:color/transparent"
     app:cardElevation="0dp">
 
@@ -11,6 +11,6 @@
         android:id="@+id/colorImageView"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:scaleType="centerCrop"
-        android:background="@color/negro" />
+        android:layout_gravity="center"
+        android:background="@android:color/transparent" />
 </androidx.cardview.widget.CardView>
