@@ -57,7 +57,8 @@ class MainActivity : AppCompatActivity() {
     private var juegoAcabado = false
     private lateinit var mediaPlayer: MediaPlayer
 
-    private val sounds = arrayOf(R.raw.abeja, R.raw.arcoiris, R.raw.caracol, R.raw.elefante)
+    private val sounds = arrayOf(R.raw.abeja, R.raw.arcoiris, R.raw.caracol, R.raw.elefante, R.raw.gusano1,
+        R.raw.mono2, R.raw.luna, R.raw.medusa, R.raw.mono1, R.raw.gusano2, R.raw.mono3, R.raw.nube, R.raw.pez, R.raw.pulpo, R.raw.seta, R.raw.volcan)
 
 
 
