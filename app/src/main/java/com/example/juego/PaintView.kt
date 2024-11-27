@@ -158,7 +158,7 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             5 -> filledPixels = (totalPixels * 0.07).toInt() //mono2
             6 -> filledPixels = (totalPixels * 0.04).toInt() //luna
             7 -> filledPixels = (totalPixels * 0.239).toInt() //medusa
-            8 -> filledPixels = (totalPixels * 0.013).toInt() //mono1
+            8 -> filledPixels = (totalPixels * 0.0132).toInt() //mono1
             9 -> filledPixels = (totalPixels * 0.135).toInt() //gusano2
             10 -> filledPixels = (totalPixels * 0.198).toInt() //mono3
             11 -> filledPixels = (totalPixels * 0.08).toInt() //nube
@@ -210,7 +210,7 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
                         setCurrentImage(nextIndex) // Pasar a la siguiente imagen
                         setFilledPixelsForNextImage() // Establecer el porcentaje de llenado correcto
                         isInteractionBlocked = false // Liberar interacciones después de 2 segundos
-                    }, 2000) // 2000 ms = 2 segundos
+                    }, 2500) // 2000 ms = 2 segundos
                 } else {
                     // Si no se completa la imagen, desbloquear interacciones
                     isInteractionBlocked = false

@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
             val minutos = tiempoEnSegundos / 60
             val segundos = tiempoEnSegundos % 60
             tiempoTextView.text = String.format("Tiempo: %02d:%02d", minutos, segundos)
-            if (tiempoEnSegundos == (0 * 60 + 20)) {
+            if (tiempoEnSegundos == (7 * 60 + 30)) {
                 handler.removeCallbacks(this)
                 juegoAcabado = true
                 onImageCompleted()
