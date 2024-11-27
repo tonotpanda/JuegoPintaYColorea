@@ -1,6 +1,7 @@
 package com.example.juego
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 class ImagenSeleccionado : AppCompatActivity() {
 
     private var characterType: String? = null
+    private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,11 +56,30 @@ class ImagenSeleccionado : AppCompatActivity() {
     }
 
     private fun navigateToMainActivity(imageName: String, imageId: Int) {
+        playSound(R.raw.boton)
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("character_type", characterType)
         intent.putExtra("character_name", imageName)
         intent.putExtra("image_id", imageId)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) // Agregar estas banderas
         startActivity(intent)
+    }
+
+    private fun playSound(soundResId: Int) {
+        // Liberar el MediaPlayer anterior si ya está inicializado
+        if (::mediaPlayer.isInitialized) {
+            mediaPlayer.release()
+        }
+
+        mediaPlayer = MediaPlayer.create(this, soundResId)
+        mediaPlayer.start()
+        mediaPlayer.setOnCompletionListener { it.release() }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (::mediaPlayer.isInitialized) {
+            mediaPlayer.release()
+        }
     }
 }
