@@ -57,7 +57,8 @@ class MainActivity : AppCompatActivity() {
     private var juegoAcabado = false
     private lateinit var mediaPlayer: MediaPlayer
 
-    private val sounds = arrayOf(R.raw.abeja, R.raw.arcoiris, R.raw.caracol, R.raw.elefante)
+    private val sounds = arrayOf(R.raw.abeja, R.raw.arcoiris, R.raw.caracol, R.raw.elefante, R.raw.gusano1,
+        R.raw.mono2, R.raw.luna, R.raw.medusa, R.raw.mono1, R.raw.gusano2, R.raw.mono3, R.raw.nube, R.raw.pez, R.raw.pulpo, R.raw.seta, R.raw.volcan)
 
 
 
@@ -67,9 +68,11 @@ class MainActivity : AppCompatActivity() {
             val minutos = tiempoEnSegundos / 60
             val segundos = tiempoEnSegundos % 60
             tiempoTextView.text = String.format("Tiempo: %02d:%02d", minutos, segundos)
-            if (tiempoEnSegundos > (7 * 60 + 30)) { //
+            if (tiempoEnSegundos == (0 * 60 + 20)) {
+                handler.removeCallbacks(this)
                 juegoAcabado = true
                 onImageCompleted()
+                finish()
             }
             handler.postDelayed(this, 1000)
 
