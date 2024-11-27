@@ -17,40 +17,40 @@ class ImagenSeleccionado : AppCompatActivity() {
         characterType = intent.getStringExtra("character_type")
 
         // Manejadores de clic para cada imagen en el GridLayout
-        val arbol = findViewById<ImageView>(R.id.arbol)
-        val barco = findViewById<ImageView>(R.id.barco)
-        val ciervo = findViewById<ImageView>(R.id.ciervo)
+        val arbol = findViewById<ImageView>(R.id.ballena)
+        val barco = findViewById<ImageView>(R.id.canguro)
+        val ciervo = findViewById<ImageView>(R.id.caracol)
         val gato = findViewById<ImageView>(R.id.gato)
-        val girasol = findViewById<ImageView>(R.id.girasol)
-        val gusano = findViewById<ImageView>(R.id.gusano)
-        val hoguera = findViewById<ImageView>(R.id.hoguera)
-        val luna = findViewById<ImageView>(R.id.luna)
-        val montaña = findViewById<ImageView>(R.id.montaña)
-        val nube = findViewById<ImageView>(R.id.nube)
-        val pato = findViewById<ImageView>(R.id.pato)
-        val perro = findViewById<ImageView>(R.id.perro)
-        val pescador = findViewById<ImageView>(R.id.pescador)
-        val planta = findViewById<ImageView>(R.id.planta)
-        val sol = findViewById<ImageView>(R.id.sol)
-        val zanahoria = findViewById<ImageView>(R.id.zanahoria)
+        val girasol = findViewById<ImageView>(R.id.conejo)
+        val gusano = findViewById<ImageView>(R.id.delfin)
+        val hoguera = findViewById<ImageView>(R.id.elefante)
+        val luna = findViewById<ImageView>(R.id.hipo)
+        val montaña = findViewById<ImageView>(R.id.koala)
+        val nube = findViewById<ImageView>(R.id.leon)
+        val pato = findViewById<ImageView>(R.id.mono)
+        val perro = findViewById<ImageView>(R.id.oveja)
+        val pescador = findViewById<ImageView>(R.id.pajaro)
+        val planta = findViewById<ImageView>(R.id.pulpo)
+        val sol = findViewById<ImageView>(R.id.rana)
+        val zanahoria = findViewById<ImageView>(R.id.vaca)
 
         // Asociar cada imagen con el personaje y el ID de la imagen
-        arbol.setOnClickListener { navigateToMainActivity("Arbol", R.drawable.arbol) }
-        barco.setOnClickListener { navigateToMainActivity("Barco", R.drawable.barco) }
-        ciervo.setOnClickListener { navigateToMainActivity("Ciervo", R.drawable.ciervo) }
+        arbol.setOnClickListener { navigateToMainActivity("Ballena", R.drawable.ballena) }
+        barco.setOnClickListener { navigateToMainActivity("Canguro", R.drawable.canguro) }
+        ciervo.setOnClickListener { navigateToMainActivity("Caracol", R.drawable.caracol) }
         gato.setOnClickListener { navigateToMainActivity("Gato", R.drawable.gato) }
-        girasol.setOnClickListener { navigateToMainActivity("Girasol", R.drawable.girasol) }
-        gusano.setOnClickListener { navigateToMainActivity("Gusano", R.drawable.gusano) }
-        hoguera.setOnClickListener { navigateToMainActivity("Hoguera", R.drawable.hoguera) }
-        luna.setOnClickListener { navigateToMainActivity("Luna", R.drawable.luna) }
-        montaña.setOnClickListener { navigateToMainActivity("Montaña", R.drawable.montana) }
-        nube.setOnClickListener { navigateToMainActivity("Nube", R.drawable.nube) }
-        pato.setOnClickListener { navigateToMainActivity("Pato", R.drawable.pato) }
-        perro.setOnClickListener { navigateToMainActivity("Perro", R.drawable.perro) }
-        pescador.setOnClickListener { navigateToMainActivity("Pescador", R.drawable.pescador) }
-        planta.setOnClickListener { navigateToMainActivity("Planta", R.drawable.planta) }
-        sol.setOnClickListener { navigateToMainActivity("Sol", R.drawable.sol) }
-        zanahoria.setOnClickListener { navigateToMainActivity("Zanahoria", R.drawable.zanahoria) }
+        girasol.setOnClickListener { navigateToMainActivity("Conejo", R.drawable.conejo) }
+        gusano.setOnClickListener { navigateToMainActivity("Delfin", R.drawable.delfin) }
+        hoguera.setOnClickListener { navigateToMainActivity("Elefante", R.drawable.elefante) }
+        luna.setOnClickListener { navigateToMainActivity("Hipo", R.drawable.hipo) }
+        montaña.setOnClickListener { navigateToMainActivity("Koala", R.drawable.koala) }
+        nube.setOnClickListener { navigateToMainActivity("Leon", R.drawable.leon) }
+        pato.setOnClickListener { navigateToMainActivity("Mono", R.drawable.mono) }
+        perro.setOnClickListener { navigateToMainActivity("Oveja", R.drawable.oveja) }
+        pescador.setOnClickListener { navigateToMainActivity("Pajaro", R.drawable.pajaro) }
+        planta.setOnClickListener { navigateToMainActivity("Pulpo", R.drawable.pulpo) }
+        sol.setOnClickListener { navigateToMainActivity("Rana", R.drawable.rana) }
+        zanahoria.setOnClickListener { navigateToMainActivity("Vaca", R.drawable.vaca) }
     }
 
     private fun navigateToMainActivity(imageName: String, imageId: Int) {

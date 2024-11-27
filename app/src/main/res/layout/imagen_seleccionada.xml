@@ -17,7 +17,7 @@
         android:background="#60ffffff">
 
         <ImageView
-            android:id="@+id/arbol"
+            android:id="@+id/ballena"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -25,10 +25,10 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/arbol" />
+            android:src="@drawable/ballena" />
 
         <ImageView
-            android:id="@+id/barco"
+            android:id="@+id/canguro"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -36,10 +36,10 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/barco" />
+            android:src="@drawable/canguro" />
 
         <ImageView
-            android:id="@+id/ciervo"
+            android:id="@+id/caracol"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -47,7 +47,7 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/ciervo" />
+            android:src="@drawable/caracol" />
 
         <ImageView
             android:id="@+id/gato"
@@ -61,7 +61,7 @@
             android:src="@drawable/gato" />
 
         <ImageView
-            android:id="@+id/girasol"
+            android:id="@+id/conejo"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -69,10 +69,10 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/girasol" />
+            android:src="@drawable/conejo" />
 
         <ImageView
-            android:id="@+id/gusano"
+            android:id="@+id/delfin"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -80,10 +80,10 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/gusano" />
+            android:src="@drawable/delfin" />
 
         <ImageView
-            android:id="@+id/hoguera"
+            android:id="@+id/elefante"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -91,10 +91,10 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/hoguera" />
+            android:src="@drawable/elefante" />
 
         <ImageView
-            android:id="@+id/luna"
+            android:id="@+id/hipo"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -102,10 +102,10 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/luna" />
+            android:src="@drawable/hipo" />
 
         <ImageView
-            android:id="@+id/montaña"
+            android:id="@+id/koala"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -113,10 +113,10 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/montana" />
+            android:src="@drawable/koala" />
 
         <ImageView
-            android:id="@+id/nube"
+            android:id="@+id/leon"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -124,10 +124,10 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/nube" />
+            android:src="@drawable/leon" />
 
         <ImageView
-            android:id="@+id/pato"
+            android:id="@+id/mono"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -135,10 +135,10 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/pato" />
+            android:src="@drawable/mono" />
 
         <ImageView
-            android:id="@+id/perro"
+            android:id="@+id/oveja"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -146,10 +146,10 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/perro" />
+            android:src="@drawable/oveja" />
 
         <ImageView
-            android:id="@+id/pescador"
+            android:id="@+id/pajaro"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -157,10 +157,10 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/pescador" />
+            android:src="@drawable/pajaro" />
 
         <ImageView
-            android:id="@+id/planta"
+            android:id="@+id/pulpo"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -168,10 +168,10 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/planta" />
+            android:src="@drawable/pulpo" />
 
         <ImageView
-            android:id="@+id/sol"
+            android:id="@+id/rana"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -179,10 +179,10 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/sol" />
+            android:src="@drawable/rana" />
 
         <ImageView
-            android:id="@+id/zanahoria"
+            android:id="@+id/vaca"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowSpan="1"
@@ -190,7 +190,7 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:src="@drawable/zanahoria" />
+            android:src="@drawable/vaca" />
 
 
     </GridLayout>
