@@ -169,6 +169,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onImageCompleted() {
+        colorAdapter.completeImage()
 
         currentIndex++
         if (!juegoAcabado){
