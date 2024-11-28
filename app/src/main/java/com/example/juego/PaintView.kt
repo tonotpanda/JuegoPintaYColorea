@@ -161,7 +161,7 @@ class PaintView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             8 -> filledPixels = (totalPixels * 0.0132).toInt() //mono1
             9 -> filledPixels = (totalPixels * 0.135).toInt() //gusano2
             10 -> filledPixels = (totalPixels * 0.20).toInt() //mono3
-            11 -> filledPixels = (totalPixels * 0.07).toInt() //nube
+            11 -> filledPixels = (totalPixels * 0.078).toInt() //nube
             12 -> filledPixels = (totalPixels * 0.063).toInt() //pez
             13 -> filledPixels = (totalPixels * 0.09).toInt() //pulpo
             14 -> filledPixels = (totalPixels * 0.371).toInt() //seta
