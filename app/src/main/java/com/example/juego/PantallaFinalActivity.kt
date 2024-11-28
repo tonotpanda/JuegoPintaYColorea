@@ -48,7 +48,7 @@ class PantallaFinalActivity : AppCompatActivity() {
         }
 
         btn_salir.setOnClickListener {
-            finish()
+            finishAffinity()
 
         }
 
